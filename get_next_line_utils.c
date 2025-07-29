@@ -6,7 +6,7 @@
 /*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:14:11 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/07/27 03:44:52 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/07/29 19:23:16 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (ft_strdup(s2));
 	if (!s2)
 		return (ft_strdup(s1));
-	result = malloc(ft_strlen(s1) + ft_strlen(s2) + 1 * sizeof(char));
+	result = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!result)
 		return (NULL);
 	while (s1[++i])
@@ -47,50 +47,46 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (result);
 }
 
-char	*ft_strdup(const char *s1)
+void	*ft_calloc(size_t n, size_t size)
 {
-	char	*copy;
-	int		i;
-	int		len;
+	size_t			total;
+	void			*ptr;
+	size_t			i;
+	unsigned char	*p;
 
+	if (n == 0 || size == 0)
+		return (malloc(1));
+	if (size != 0 && n > (size_t)-1 / size)
+		return (NULL);
+	total = n * size;
+	ptr = malloc(n * size);
+	if (!ptr)
+		return (NULL);
+	p = (unsigned char *)ptr;
 	i = 0;
-	if (!s1)
-		return (NULL);
-	len = ft_strlen(s1);
-	copy = (char *)malloc((len + 1) * sizeof(char));
-	if (!copy)
-		return (NULL);
-	while (i < len)
+	while (i < total)
+		p[i++] = 0;
+	return (ptr);
+}
+size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+{
+	size_t	i;
+
+	if (!size)
+		return (ft_strlen(src));
+	i = 0;
+	while (src[i] && i < size - 1)
 	{
-		copy[i] = s1[i];
+		dest[i] = src[i];
 		i++;
 	}
-	copy[i] = '\0';
-	return (copy);
+	dest[i] = '\0';
+	return (ft_strlen(src));
 }
 
-int	ft_indexof(const char *s, int c)
+void	*ft_free(void *ptr, void *ptr2)
 {
-	int	i;
-
-	i = 0;
-	if (!s)
-		return (-1);
-	while (s[i])
-	{
-		if (s[i] == (char)c)
-			return (i);
-		i++;
-	}
-	if (c == '\0')
-		return (i);
-	return (-1);
-}
-
-void	*ft_free(void *ptr)
-{
-	if (ptr)
-		free(ptr);
-	ptr = NULL;
+	free(ptr);
+	free(ptr2);
 	return (NULL);
 }
