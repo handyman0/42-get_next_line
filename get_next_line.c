@@ -1,111 +1,106 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/29 12:27:17 by lmelo-do          #+#    #+#             */
+/*   Updated: 2025/07/29 13:09:15 by lmelo-do         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
-char	*ft_read_and_store(int fd, char *resto)
+char	*ft_read_and_store(int fd, char *stash)
 {
 	char	buffer[BUFFER_SIZE + 1];
 	int		bytes_read;
 	char	*temp;
 
-	if (!resto)
-		resto = ft_strdup("");
-	if (!resto)
+	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
+	if (!stash)
+	{
+		stash = ft_strdup("");
+		return (stash);
+	}
 	bytes_read = 1;
-	while (!ft_strchr(resto, '\n') && bytes_read > 0)
+	while (!ft_strchr(stash, '\n') && bytes_read > 0)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read < 0)
-		{
-			free(resto);
-			return (NULL);
-		}
+			ft_free(stash);
 		buffer[bytes_read] = '\0';
-		temp = ft_strjoin(resto, buffer);
-		free(resto);
-		resto = temp;
-		if (!resto)
+		temp = ft_strjoin(stash, buffer);
+		free(stash);
+		stash = temp;
+		if (!stash)
 			return (NULL);
 	}
-	if (bytes_read == 0 && !*resto)
+	if (bytes_read == 0 && !*stash)
 	{
-		free(resto);
+		free(stash);
 		return (NULL);
 	}
-	return (resto);
+	return (stash);
 }
 
-char	*ft_extract_line(char *resto)
+char	*ft_extract_line(char *stash)
 {
 	int		i;
 	char	*line;
 
-	if (!resto || !*resto)
-		return (NULL);
 	i = 0;
-	while (resto[i] && resto[i] != '\n')
+	if (!stash || !*stash)
+		return (NULL);
+	while (stash[i] && stash[i] != '\n')
+	{
 		i++;
-	if (resto[i] == '\n')
-		i++;
+		if (stash[i] == '\n')
+			i++;
+	}
 	line = malloc((i + 1) * sizeof(char));
 	if (!line)
 		return (NULL);
-	i = 0;
-	while (resto[i] && resto[i] != '\n')
-	{
-		line[i] = resto[i];
-		i++;
-	}
-	if (resto[i] == '\n')
-	{
-		line[i] = resto[i];
-		i++;
-	}
-	line[i] = '\0';
+	ft_strlcpy(line, stash, i + 1);
 	return (line);
 }
 
-char	*ft_update_resto(char *resto)
+char	*ft_update_line(char *stash)
 {
 	int		i;
 	int		j;
-	char	*new_resto;
+	char	*buffer;
 
-	if (!resto)
+	if (!stash)
 		return (NULL);
 	i = 0;
-	while (resto[i] && resto[i] != '\n')
+	while (stash[i] && stash[i] != '\n')
 		i++;
-	if (!resto[i])
-	{
-		free(resto);
-		return (NULL);
-	}
-	new_resto = malloc((ft_strlen(resto) - i) * sizeof(char));
-	if (!new_resto)
-	{
-		free(resto);
-		return (NULL);
-	}
-	i++;
+	while (stash[i] && stash[i] == '\n')
+		i++;
+	if (!stash[i])
+		ft_free(stash);
+	buffer = malloc((ft_strlen(stash) - i) * sizeof(char));
 	j = 0;
-	while (resto[i])
-		new_resto[j++] = resto[i++];
-	new_resto[j] = '\0';
-	free(resto);
-	return (new_resto);
+	while (stash[i])
+		buffer[j++] = stash[i++];
+	free(stash);
+	return (buffer);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*resto;
+	static char	*stash;
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	resto = ft_read_and_store(fd, resto);
-	if (!resto)
+	stash = ft_read_and_store(fd, stash);
+	if (!stash)
 		return (NULL);
-	line = ft_extract_line(resto);
-	resto = ft_update_resto(resto);
+	line = ft_extract_line(stash);
+	stash = ft_update_line(stash);
 	return (line);
 }
