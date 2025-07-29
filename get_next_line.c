@@ -6,7 +6,7 @@
 /*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 12:27:17 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/07/29 13:09:15 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/07/29 14:51:02 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,29 @@
 
 char	*ft_read_and_store(int fd, char *stash)
 {
-	char	buffer[BUFFER_SIZE + 1];
+	char	*buffer;
 	int		bytes_read;
 	char	*temp;
 
-	if (BUFFER_SIZE <= 0 || fd < 0)
-		return (NULL);
 	if (!stash)
-	{
-		stash = ft_strdup("");
-		return (stash);
-	}
+		stash = ft_calloc(sizeof(char), 1);
+	buffer = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
+	if (!stash || !buffer)
+		ft_free(stash, buffer);
 	bytes_read = 1;
 	while (!ft_strchr(stash, '\n') && bytes_read > 0)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read < 0)
+		if (bytes_read == -1)
 			ft_free(stash);
 		buffer[bytes_read] = '\0';
 		temp = ft_strjoin(stash, buffer);
+		if (!temp)
+			ft_free(temp, buffer);
 		free(stash);
 		stash = temp;
-		if (!stash)
-			return (NULL);
 	}
-	if (bytes_read == 0 && !*stash)
-	{
-		free(stash);
-		return (NULL);
-	}
+	free(buffer);
 	return (stash);
 }
 
@@ -78,7 +72,7 @@ char	*ft_update_line(char *stash)
 	i = 0;
 	while (stash[i] && stash[i] != '\n')
 		i++;
-	while (stash[i] && stash[i] == '\n')
+	if (stash[i] == '\n')
 		i++;
 	if (!stash[i])
 		ft_free(stash);
