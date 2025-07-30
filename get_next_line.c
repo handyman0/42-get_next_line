@@ -6,7 +6,7 @@
 /*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 12:27:17 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/07/29 21:36:26 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/07/29 22:00:20 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ char	*ft_read_and_store(int fd, char *stash)
 char	*ft_extract_line(char *stash)
 {
 	int		i;
+	int		j;
 	char	*line;
 
 	i = 0;
@@ -68,7 +69,13 @@ char	*ft_extract_line(char *stash)
 	line = malloc((i + 1) * sizeof(char));
 	if (!line)
 		return (NULL);
-	ft_strlcpy(line, stash, i + 1);
+	j = 0;
+	while (j < i)
+	{
+		line[j] = stash[j];
+		j++;
+	}
+	line[j] = '\0';
 	return (line);
 }
 
@@ -95,7 +102,6 @@ char	*ft_update_line(char *stash)
 	free(stash);
 	return (new_stash);
 }
-
 
 char	*get_next_line(int fd)
 {
