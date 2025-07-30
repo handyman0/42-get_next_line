@@ -6,13 +6,13 @@
 /*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 12:27:17 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/07/29 22:00:20 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/07/30 16:01:04 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strchr(const char *s, int c)
+static char	*ft_strchr(const char *s, int c)
 {
 	while (*s)
 	{
@@ -25,7 +25,7 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*ft_read_and_store(int fd, char *stash)
+static char	*ft_read(int fd, char *stash)
 {
 	char	*buffer;
 	int		bytes_read;
@@ -53,7 +53,7 @@ char	*ft_read_and_store(int fd, char *stash)
 	return (stash);
 }
 
-char	*ft_extract_line(char *stash)
+static char	*ft_extract_line(char *stash)
 {
 	int		i;
 	int		j;
@@ -79,7 +79,7 @@ char	*ft_extract_line(char *stash)
 	return (line);
 }
 
-char	*ft_update_line(char *stash)
+static char	*ft_trim_stash(char *stash)
 {
 	int		i;
 	int		j;
@@ -110,10 +110,10 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	stash = ft_read_and_store(fd, stash);
+	stash = ft_read(fd, stash);
 	if (!stash)
 		return (NULL);
 	line = ft_extract_line(stash);
-	stash = ft_update_line(stash);
+	stash = ft_trim_stash(stash);
 	return (line);
 }
