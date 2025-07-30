@@ -6,7 +6,7 @@
 /*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:14:24 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/07/29 20:42:08 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/07/29 21:51:18 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ char	*ft_extract_line(char *resto);
 char	*ft_update_line(char *resto);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strdup(const char *s);
-size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 size_t	ft_strlen(const char *s);
 void	*ft_calloc(size_t n, size_t size);
 void	*ft_free(void *ptr, void *ptr2);
