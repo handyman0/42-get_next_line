@@ -6,7 +6,7 @@
 /*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 12:27:17 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/07/30 16:01:04 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/07/30 19:27:55 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	*ft_read(int fd, char *stash)
 {
 	char	*buffer;
 	int		bytes_read;
-	char	*temp;
+	char	*temp; // remover depois
 
 	if (!stash)
 		stash = ft_calloc(sizeof(char), 1);
