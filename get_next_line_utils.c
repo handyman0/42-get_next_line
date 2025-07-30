@@ -6,7 +6,7 @@
 /*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:14:11 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/07/29 20:42:31 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/07/29 21:51:00 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,22 +67,6 @@ void	*ft_calloc(size_t n, size_t size)
 	while (i < total)
 		p[i++] = 0;
 	return (ptr);
-}
-
-size_t	ft_strlcpy(char *dest, const char *src, size_t size)
-{
-	size_t	i;
-
-	if (!size)
-		return (ft_strlen(src));
-	i = 0;
-	while (src[i] && i < size - 1)
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (ft_strlen(src));
 }
 
 void	*ft_free(void *ptr, void *ptr2)
