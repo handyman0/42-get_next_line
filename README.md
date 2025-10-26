@@ -8,7 +8,6 @@
 
 <p align="center">
 	<img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/handyman0/42-get_next_line?color=lightblue" />
-	<img alt="Number of lines of code" src="https://img.shields.io/tokei/lines/github/handyman0/42-get_next_line?color=critical" />
 	<img alt="Code language count" src="https://img.shields.io/github/languages/count/handyman0/42-get_next_line?color=yellow" />
 	<img alt="GitHub top language" src="https://img.shields.io/github/languages/top/handyman0/42-get_next_line?color=blue" />
 	<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/handyman0/42-get_next_line?color=green" />
@@ -17,14 +16,14 @@
 <h3 align="center">
 	<a href="#-about">About</a>
 	<span> · </span>
-	<a href="#-usage">Usage</a>
+	<a href="#-Usage">Usage</a>
 	<span> · </span>
 	<a href="#-testing">Testing</a>
 </h3>
 
 ---
 
-## 💡 About the project
+## 💡 About
 
 > _This project is about programming a function that returns a line read from a file descriptor._
 
